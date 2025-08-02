@@ -7,7 +7,7 @@ import genertedRefreshToken from "../utils/generatedRefreshToken.js";
 import uploadImageClodinary from "../utils/uploadImageClodinary.js";
 import generatedOtp from "../utils/generatedOtp.js";
 import forgotPasswordTemplate from "../utils/forgotPasswordTemplate.js";
-// import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 // Register User Controller
 export async function registerUserController(request, response) {
@@ -439,58 +439,62 @@ export async function resetpassword(request, response) {
   }
 }
 
-//refresh token controler
-// export async function refreshToken(request,response){
-//     try {
-//         const refreshToken = request.cookies.refreshToken || request?.headers?.authorization?.split(" ")[1]  /// [ Bearer token]
+// Refresh Token Controler
+export async function refreshToken(request, response) {
+  try {
+    const refreshToken =
+      request.cookies.refreshToken ||
+      request?.headers?.authorization?.split(" ")[1]; // [ Bearer token]
 
-//         if(!refreshToken){
-//             return response.status(401).json({
-//                 message : "Invalid token",
-//                 error  : true,
-//                 success : false
-//             })
-//         }
+    if (!refreshToken) {
+      return response.status(401).json({
+        message: "Invalid token",
+        error: true,
+        success: false,
+      });
+    }
 
-//         const verifyToken = await jwt.verify(refreshToken,process.env.SECRET_KEY_REFRESH_TOKEN)
+    const verifyToken = await jwt.verify(
+      refreshToken,
+      process.env.SECRET_KEY_REFRESH_TOKEN
+    );
 
-//         if(!verifyToken){
-//             return response.status(401).json({
-//                 message : "token is expired",
-//                 error : true,
-//                 success : false
-//             })
-//         }
+    if (!verifyToken) {
+      return response.status(401).json({
+        message: "token is expired",
+        error: true,
+        success: false,
+      });
+    }
 
-//         const userId = verifyToken?._id
+    const userId = verifyToken?._id;
 
-//         const newAccessToken = await generatedAccessToken(userId)
+    const newAccessToken = await generatedAccessToken(userId);
 
-//         const cookiesOption = {
-//             httpOnly : true,
-//             secure : true,
-//             sameSite : "None"
-//         }
+    const cookiesOption = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    };
 
-//         response.cookie('accessToken',newAccessToken,cookiesOption)
+    response.cookie("accessToken", newAccessToken, cookiesOption);
 
-//         return response.json({
-//             message : "New Access token generated",
-//             error : false,
-//             success : true,
-//             data : {
-//                 accessToken : newAccessToken
-//             }
-//         })
-
-//     } catch (error) {
-//         return response.status(500).json({
-//             message : error.message || error,
-//             error : true,
-//             success : false
-//         })
-//     }
-// }
+    return response.json({
+      message: "New Access token generated",
+      error: false,
+      success: true,
+      data: {
+        accessToken: newAccessToken,
+      },
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
 
 //get login user details
 // export async function userDetails(request,response){
