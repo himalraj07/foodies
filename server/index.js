@@ -28,12 +28,12 @@ const PORT = 8080 || process.env.PORT;
 app.get("/", (request, response) => {
   // server to client side
   response.json({
-    message: "Server is running " + PORT
-  })
+    message: "Server is running " + PORT,
+  });
 });
 
-connectDB()
-
-app.listen(PORT, () => {
-  console.log("Server is running", PORT);
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log("Server is running", PORT);
+  });
 });
