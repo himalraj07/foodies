@@ -5,8 +5,8 @@ import verifyEmailTemplate from "../utils/verifyEmailTemplate.js";
 import generatedAccessToken from "../utils/generatedAccessToken.js";
 import genertedRefreshToken from "../utils/generatedRefreshToken.js";
 import uploadImageClodinary from "../utils/uploadImageClodinary.js";
-// import generatedOtp from "../utils/generatedOtp.js";
-// import forgotPasswordTemplate from "../utils/forgotPasswordTemplate.js";
+import generatedOtp from "../utils/generatedOtp.js";
+import forgotPasswordTemplate from "../utils/forgotPasswordTemplate.js";
 // import jwt from "jsonwebtoken";
 
 // Register User Controller
@@ -280,52 +280,51 @@ export async function updateUserDetails(request, response) {
   }
 }
 
-//forgot password not login
-// export async function forgotPasswordController(request,response) {
-//     try {
-//         const { email } = request.body
+// Forgot Password Not logIn
+export async function forgotPasswordController(request, response) {
+  try {
+    const { email } = request.body;
 
-//         const user = await UserModel.findOne({ email })
+    const user = await UserModel.findOne({ email });
 
-//         if(!user){
-//             return response.status(400).json({
-//                 message : "Email not available",
-//                 error : true,
-//                 success : false
-//             })
-//         }
+    if (!user) {
+      return response.status(400).json({
+        message: "Email not available",
+        error: true,
+        success: false,
+      });
+    }
 
-//         const otp = generatedOtp()
-//         const expireTime = new Date() + 60 * 60 * 1000 // 1hr
+    const otp = generatedOtp();
+    const expireTime = new Date() + 60 * 60 * 1000; // 1hr
 
-//         const update = await UserModel.findByIdAndUpdate(user._id,{
-//             forgot_password_otp : otp,
-//             forgot_password_expiry : new Date(expireTime).toISOString()
-//         })
+    const update = await UserModel.findByIdAndUpdate(user._id, {
+      forgot_password_otp: otp,
+      forgot_password_expiry: new Date(expireTime).toISOString(),
+    });
 
-//         await sendEmail({
-//             sendTo : email,
-//             subject : "Forgot password from Binkeyit",
-//             html : forgotPasswordTemplate({
-//                 name : user.name,
-//                 otp : otp
-//             })
-//         })
+    await sendEmail({
+      sendTo: email,
+      subject: "Forgot password from Foodies",
+      html: forgotPasswordTemplate({
+        name: user.name,
+        otp: otp,
+      }),
+    });
 
-//         return response.json({
-//             message : "check your email",
-//             error : false,
-//             success : true
-//         })
-
-//     } catch (error) {
-//         return response.status(500).json({
-//             message : error.message || error,
-//             error : true,
-//             success : false
-//         })
-//     }
-// }
+    return response.json({
+      message: "check your email",
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
 
 //verify forgot password otp
 // export async function verifyForgotPasswordOtp(request,response){
