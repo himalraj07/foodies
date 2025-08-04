@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { FaRegEyeSlash } from "react-icons/fa6";
-import { FaRegEye } from "react-icons/fa6";
+import { FaRegEyeSlash, FaRegEye } from "react-icons/fa6";
 import toast from "react-hot-toast";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
@@ -65,93 +64,151 @@ const Register = () => {
   };
 
   return (
-    <section className=" w-full container mx-auto px-2">
-      <div className="bg-white my-4 w-full max-w-lg mx-auto rounded p-7">
-        <p>Welcome to Foodies</p>
-
-        <form action="" className="grid gap-4 mt-6" onSubmit={handleSubmit}>
-          <div className="grid gap-1">
-            <label htmlFor="name">Name :</label>
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-yellow-50">
+      <div className="bg-white/90 shadow-2xl rounded-3xl p-10 w-full max-w-xl mx-auto border border-blue-100 relative overflow-hidden">
+        {/* Decorative Circles */}
+        <div className="absolute -top-10 -left-10 w-40 h-40 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full opacity-20 pointer-events-none z-0"></div>
+        <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-gradient-to-br from-blue-400 to-sky-300 rounded-full opacity-20 pointer-events-none z-0"></div>
+        {/* Logo & Welcome */}
+        <div className="relative z-10 flex flex-col items-center mb-8">
+          <div className="flex items-center gap-2 mb-2">
+            <img
+              src="https://img.icons8.com/color/96/000000/meal.png"
+              alt="Foodies Logo"
+              className="w-12 h-12 drop-shadow-lg"
+            />
+            <span className="text-3xl font-extrabold text-blue-600 tracking-tight drop-shadow-sm">
+              Foodies
+            </span>
+          </div>
+          <h2 className="text-xl font-semibold text-gray-700 mb-1">
+            Create your account
+          </h2>
+          <p className="text-gray-500 text-sm">
+            Join Foodies and start your delicious journey!
+          </p>
+        </div>
+        {/* Form */}
+        <form
+          className="grid gap-6 relative z-10"
+          onSubmit={handleSubmit}
+          autoComplete="off"
+        >
+          <div>
+            <label
+              htmlFor="name"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              Name
+            </label>
             <input
               type="text"
               id="name"
               autoFocus
-              className="bg-blue-50 p-2 border rounded outline-none focus:border-sky-500"
+              className="w-full bg-blue-50/70 p-3 border border-blue-200 rounded-lg outline-none focus:border-blue-400 transition"
               name="name"
               value={data.name}
               onChange={handleChange}
               placeholder="Enter your name"
             />
           </div>
-          <div className="grid gap-1">
-            <label htmlFor="email">Email :</label>
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              Email
+            </label>
             <input
               type="email"
               id="email"
-              className="bg-blue-50 p-2 border rounded  outline-none focus:border-sky-500"
+              className="w-full bg-blue-50/70 p-3 border border-blue-200 rounded-lg outline-none focus:border-blue-400 transition"
               name="email"
               value={data.email}
               onChange={handleChange}
               placeholder="Enter your email"
             />
           </div>
-          <div className="grid gap-1">
-            <label htmlFor="password">Password :</label>
-            <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-sky-500">
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              Password
+            </label>
+            <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
-                className="w-full outline-none"
+                className="w-full bg-blue-50/70 p-3 border border-blue-200 rounded-lg outline-none focus:border-blue-400 transition pr-12"
                 name="password"
                 value={data.password}
                 onChange={handleChange}
                 placeholder="Enter your password"
               />
-              <div
+              <button
+                type="button"
+                tabIndex={-1}
                 onClick={() => setShowPassword((prev) => !prev)}
-                className="cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 hover:text-blue-600 transition"
               >
-                {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
-              </div>
+                {showPassword ? <FaRegEye size={20} /> : <FaRegEyeSlash size={20} />}
+              </button>
             </div>
           </div>
-
-          <div className="grid gap-1">
-            <label htmlFor="confirmPassword">Confirm Password :</label>
-            <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-sky-500">
+          <div>
+            <label
+              htmlFor="confirmPassword"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              Confirm Password
+            </label>
+            <div className="relative">
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
-                className="w-full outline-none"
+                className="w-full bg-blue-50/70 p-3 border border-blue-200 rounded-lg outline-none focus:border-blue-400 transition pr-12"
                 name="confirmPassword"
                 value={data.confirmPassword}
                 onChange={handleChange}
-                placeholder="Enter your confirm password"
+                placeholder="Confirm your password"
               />
-              <div
+              <button
+                type="button"
+                tabIndex={-1}
                 onClick={() => setShowConfirmPassword((prev) => !prev)}
-                className="cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 hover:text-blue-600 transition"
               >
-                {showConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />}
-              </div>
+                {showConfirmPassword ? <FaRegEye size={20} /> : <FaRegEyeSlash size={20} />}
+              </button>
             </div>
           </div>
-
           <button
             disabled={!validateValue}
-            className={`${
-              validateValue ? "bg-blue-500 hover:bg-blue-400" : "bg-gray-500"
-            } text-white p-2 rounded font-semibold my-3 tracking-wide`}
+            className={`w-full py-3 rounded-lg font-bold text-lg shadow-md transition cursor-pointer ${
+              validateValue
+                ? "bg-gradient-to-r from-yellow-400 to-orange-400 text-white hover:from-orange-400 hover:to-yellow-400 hover:scale-[1.02]"
+                : "bg-gray-300 text-gray-400 cursor-not-allowed"
+            }`}
           >
             Register
           </button>
         </form>
-
-        <p>
+        {/* Divider */}
+        <div className="relative my-8">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-200"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="bg-white px-3 text-gray-400">or</span>
+          </div>
+        </div>
+        {/* Login Link */}
+        <p className="text-center text-gray-600">
           Already have an account?{" "}
           <Link
             to={"/login"}
-            className="text-blue-500 font-semibold hover:text-blue-600"
+            className="text-blue-500 font-semibold hover:text-orange-500 transition"
           >
             Login
           </Link>
