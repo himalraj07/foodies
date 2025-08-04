@@ -33,7 +33,7 @@ app.get("/", (request, response) => {
   });
 });
 
-app.use('/api/user', userRouter)
+app.use("/api/user", userRouter);
 
 connectDB().then(() => {
   app.listen(PORT, () => {
