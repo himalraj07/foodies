@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Divider from "./Divider";
-import Axios from '../utils/Axios'
+import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
 import { logout } from "../store/userSlice";
 import toast from "react-hot-toast";
@@ -10,9 +10,10 @@ import AxiosToastError from "../utils/AxiosToastError";
 // import { HiOutlineExternalLink } from "react-icons/hi";
 // import isAdmin from "../utils/isAdmin";
 
-const UserMenu = ({close}) => {
+const UserMenu = ({ close }) => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -20,10 +21,13 @@ const UserMenu = ({close}) => {
         ...SummaryApi.logout,
       });
       if (response.data.success) {
-        close();
+        if (close) {
+          close();
+        }
         dispatch(logout());
         localStorage.clear();
         toast.success(response.data.message);
+        navigate("/");
       }
     } catch (error) {
       AxiosToastError(error);
@@ -35,12 +39,23 @@ const UserMenu = ({close}) => {
       <div className="font-semibold">My Account </div>
       <div className="text-sm">{user.name || user.mobile}</div>
 
-      <Divider/>
+      <Divider />
 
       <div className="text-sm grid gap-1">
-        <Link to={""}  className='rounded px-2 hover:bg-orange-200 py-1'> My Orders</Link>
-        <Link to={""}  className='rounded px-2 hover:bg-orange-200 py-1'> Save Address</Link>
-        <button onClick={handleLogout} className="rounded cursor-pointer text-left hover:bg-red-300 py-1 px-2">Log Out</button>
+        <Link to={""} className="rounded px-2 hover:bg-orange-200 py-1">
+          {" "}
+          My Orders
+        </Link>
+        <Link to={""} className="rounded px-2 hover:bg-orange-200 py-1">
+          {" "}
+          Save Address
+        </Link>
+        <button
+          onClick={handleLogout}
+          className="rounded cursor-pointer text-left hover:bg-red-300 py-1 px-2"
+        >
+          Log Out
+        </button>
       </div>
     </div>
   );

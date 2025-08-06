@@ -138,7 +138,7 @@ const Register = () => {
           <button
             disabled={!valideValue}
             className={` ${
-              valideValue ? "bg-sky-500text-sky-500 hover:bg-sky-text-sky-400" : "bg-gray-500"
+              valideValue ? "bg-sky-500 text-sky-500 hover:text-sky-400" : "bg-gray-500"
             }    text-white py-2 rounded font-semibold my-3 tracking-wide`}
           >
             Register
