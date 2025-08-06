@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { FaRegEyeSlash } from "react-icons/fa6";
-import { FaRegEye } from "react-icons/fa6";
+import { FaRegEyeSlash, FaRegEye } from "react-icons/fa6";
 import toast from "react-hot-toast";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
 import AxiosToastError from "../utils/AxiosToastError";
 import { Link, useNavigate } from "react-router-dom";
-// import fetchUserDetails from "../utils/fetchUserDetails";
-// import { useDispatch } from "react-redux";
-// import { setUserDetails } from "../store/userSlice";
+import fetchUserDetails from "../utils/fetchUserDetails";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "../store/userSlice";
 
 const Login = () => {
   const [data, setData] = useState({
@@ -17,7 +16,7 @@ const Login = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,8 +49,8 @@ const Login = () => {
         localStorage.setItem("accesstoken", response.data.data.accesstoken);
         localStorage.setItem("refreshToken", response.data.data.refreshToken);
 
-        // const userDetails = await fetchUserDetails();
-        // dispatch(setUserDetails(userDetails.data));
+        const userDetails = await fetchUserDetails();
+        dispatch(setUserDetails(userDetails.data));
 
         setData({
           email: "",
@@ -109,8 +108,8 @@ const Login = () => {
           <button
             disabled={!valideValue}
             className={` ${
-              valideValue ? "bg-sky-500 hover:bg-sky-400" : "bg-gray-500"
-            }    text-white py-2 rounded font-semibold my-3 tracking-wide`}
+              valideValue ? "bg-orange-400 hover:bg-orange-300" : "bg-gray-500"
+            }    text-white py-2 rounded font-semibold my-3 tracking-wide cursor-pointer`}
           >
             Login
           </button>

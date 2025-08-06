@@ -23,6 +23,10 @@ const Header = () => {
     navigate("/login");
   };
 
+  const handleCloseUserMenu = () => {
+    setOpenUserMenu(false);
+  }
+
   return (
     <header className="h-24 lg:h-20 lg:shadow-md sticky top-0 z-40 flex flex-col justify-center gap-1 bg-white">
       {!(isSearchPage && isMobile) && (
@@ -77,19 +81,19 @@ const Header = () => {
                   {openUserMenu && (
                     <div className="absolute right-0 top-12">
                       <div className="bg-white rounded p-4 min-w-52 lg:shadow-lg">
-                        <UserMenu />
+                        <UserMenu close={handleCloseUserMenu} />
                       </div>
                     </div>
                   )}
                 </div>
               ) : (
-                <button onClick={redirectToLoginPage} className="text-lg px-2">
+                <button onClick={redirectToLoginPage} className="text-lg px-2 hover:bg-blue-200 rounded cursor-pointer">
                   Login
                 </button>
               )}
               <button
                 onClick={() => setOpenCartSection(true)}
-                className="flex items-center gap-2 bg-green-800 hover:bg-green-700 px-3 py-2 rounded text-white"
+                className="flex items-center gap-2 bg-green-800 hover:bg-green-700 px-3 py-2 rounded text-white cursor-pointer"
               >
                 {/**add to card icons */}
                 <div className="animate-bounce">

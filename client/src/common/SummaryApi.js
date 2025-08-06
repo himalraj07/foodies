@@ -29,10 +29,10 @@ const SummaryApi = {
     url: "/api/user/user-details",
     method: "get",
   },
-  // logout: {
-  //   url: "/api/user/logout",
-  //   method: "get",
-  // },
+  logout: {
+    url: "/api/user/logout",
+    method: "get",
+  },
   // uploadAvatar: {
   //   url: "/api/user/upload-avatar",
   //   method: "put",
