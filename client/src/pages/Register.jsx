@@ -75,7 +75,7 @@ const Register = () => {
               type="text"
               id="name"
               autoFocus
-              className="bg-blue-50 p-2 border rounded outline-none focus:border-primary-200"
+              className="bg-blue-50 p-2 border rounded outline-none focus:border-sky-500"
               name="name"
               value={data.name}
               onChange={handleChange}
@@ -87,7 +87,7 @@ const Register = () => {
             <input
               type="email"
               id="email"
-              className="bg-blue-50 p-2 border rounded outline-none focus:border-primary-200"
+              className="bg-blue-50 p-2 border rounded outline-none focus:border-sky-500"
               name="email"
               value={data.email}
               onChange={handleChange}
@@ -96,7 +96,7 @@ const Register = () => {
           </div>
           <div className="grid gap-1">
             <label htmlFor="password">Password :</label>
-            <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-primary-200">
+            <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-sky-500">
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
@@ -116,7 +116,7 @@ const Register = () => {
           </div>
           <div className="grid gap-1">
             <label htmlFor="confirmPassword">Confirm Password :</label>
-            <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-primary-200">
+            <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-sky-500">
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
@@ -138,7 +138,7 @@ const Register = () => {
           <button
             disabled={!valideValue}
             className={` ${
-              valideValue ? "bg-green-800 hover:bg-green-700" : "bg-gray-500"
+              valideValue ? "bg-sky-500text-sky-500 hover:bg-sky-text-sky-400" : "bg-gray-500"
             }    text-white py-2 rounded font-semibold my-3 tracking-wide`}
           >
             Register
@@ -149,7 +149,7 @@ const Register = () => {
           Already have account ?{" "}
           <Link
             to={"/login"}
-            className="font-semibold text-green-700 hover:text-green-800"
+            className="font-semibold text-sky-400 hover:text-sky-500"
           >
             Login
           </Link>

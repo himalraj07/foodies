@@ -12,6 +12,7 @@ const Header = () => {
   const location = useLocation();
   const isSearchPage = location.pathname === "/search";
   const navigate = useNavigate();
+  
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const redirectToLoginPage = () => {

@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-import { FaRegEyeSlash } from "react-icons/fa6";
-import { FaRegEye } from "react-icons/fa6";
+import { useState } from "react";
 import toast from "react-hot-toast";
-import Axios from "../utils/Axios";
-import SummaryApi from "../common/SummaryApi";
-import AxiosToastError from "../utils/AxiosToastError";
 import { Link, useNavigate } from "react-router-dom";
+import SummaryApi from "../common/SummaryApi";
+import Axios from "../utils/Axios";
+import AxiosToastError from "../utils/AxiosToastError";
 
 const ForgotPassword = () => {
   const [data, setData] = useState({
@@ -31,7 +29,7 @@ const ForgotPassword = () => {
 
     try {
       const response = await Axios({
-        ...SummaryApi.forgotPassword,
+        ...SummaryApi.forgot_password,
         data: data,
       });
 
@@ -63,7 +61,7 @@ const ForgotPassword = () => {
             <input
               type="email"
               id="email"
-              className="bg-blue-50 p-2 border rounded outline-none focus:border-primary-200"
+              className="bg-blue-50 p-2 border rounded outline-none focus:border-sky-500"
               name="email"
               value={data.email}
               onChange={handleChange}
@@ -74,7 +72,7 @@ const ForgotPassword = () => {
           <button
             disabled={!valideValue}
             className={` ${
-              valideValue ? "bg-green-800 hover:bg-green-700" : "bg-gray-500"
+              valideValue ? "bg-sky-500 hover:bg-sky-400" : "bg-gray-500"
             }    text-white py-2 rounded font-semibold my-3 tracking-wide`}
           >
             Send Otp
@@ -85,7 +83,7 @@ const ForgotPassword = () => {
           Already have account?{" "}
           <Link
             to={"/login"}
-            className="font-semibold text-green-700 hover:text-green-800"
+            className="font-semibold text-sky-400 hover:text-sky-500"
           >
             Login
           </Link>

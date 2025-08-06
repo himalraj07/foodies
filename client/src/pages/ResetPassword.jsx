@@ -87,10 +87,10 @@ const ResetPassword = () => {
         <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
           <div className="grid gap-1">
             <label htmlFor="newPassword">New Password :</label>
-            <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-primary-200">
+            <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-sky-500">
               <input
                 type={showPassword ? "text" : "password"}
-                id="password"
+                id="newPassword"
                 className="w-full outline-none"
                 name="newPassword"
                 value={data.newPassword}
@@ -108,10 +108,10 @@ const ResetPassword = () => {
 
           <div className="grid gap-1">
             <label htmlFor="confirmPassword">Confirm Password :</label>
-            <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-primary-200">
+            <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-sky-500">
               <input
                 type={showConfirmPassword ? "text" : "password"}
-                id="password"
+                id="confirmPassword"
                 className="w-full outline-none"
                 name="confirmPassword"
                 value={data.confirmPassword}
@@ -130,7 +130,7 @@ const ResetPassword = () => {
           <button
             disabled={!valideValue}
             className={` ${
-              valideValue ? "bg-green-800 hover:bg-green-700" : "bg-gray-500"
+              valideValue ? "bg-sky-500 hover:bg-sky-400" : "bg-gray-500"
             }    text-white py-2 rounded font-semibold my-3 tracking-wide`}
           >
             Change Password
@@ -141,7 +141,7 @@ const ResetPassword = () => {
           Already have account?{" "}
           <Link
             to={"/login"}
-            className="font-semibold text-green-700 hover:text-green-800"
+            className="font-semibold text-sky-400 hover:text-sky-500"
           >
             Login
           </Link>

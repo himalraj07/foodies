@@ -72,7 +72,7 @@ const Login = () => {
             <input
               type="email"
               id="email"
-              className="bg-blue-50 p-2 border rounded outline-none focus:border-primary-200"
+              className="bg-blue-50 p-2 border rounded outline-none focus:border-sky-500"
               name="email"
               value={data.email}
               onChange={handleChange}
@@ -81,7 +81,7 @@ const Login = () => {
           </div>
           <div className="grid gap-1">
             <label htmlFor="password">Password :</label>
-            <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-primary-200">
+            <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-sky-500">
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
@@ -100,7 +100,7 @@ const Login = () => {
             </div>
             <Link
               to={"/forgot-password"}
-              className="block ml-auto hover:text-primary-200"
+              className="block ml-auto hover:text-sky-500"
             >
               Forgot password ?
             </Link>
@@ -109,7 +109,7 @@ const Login = () => {
           <button
             disabled={!valideValue}
             className={` ${
-              valideValue ? "bg-green-800 hover:bg-green-700" : "bg-gray-500"
+              valideValue ? "bg-sky-500 hover:bg-sky-400" : "bg-gray-500"
             }    text-white py-2 rounded font-semibold my-3 tracking-wide`}
           >
             Login
@@ -120,7 +120,7 @@ const Login = () => {
           Don't have account?{" "}
           <Link
             to={"/register"}
-            className="font-semibold text-green-700 hover:text-green-800"
+            className="font-semibold text-sky-400 hover:text-sky-500"
           >
             Register
           </Link>

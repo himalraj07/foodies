@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import { FaRegEyeSlash } from "react-icons/fa6";
-import { FaRegEye } from "react-icons/fa6";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import Axios from "../utils/Axios";
-import SummaryApi from "../common/SummaryApi";
-import AxiosToastError from "../utils/AxiosToastError";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import SummaryApi from "../common/SummaryApi";
+import Axios from "../utils/Axios";
+import AxiosToastError from "../utils/AxiosToastError";
 
 const OtpVerification = () => {
   const [data, setData] = useState(["", "", "", "", "", ""]);
@@ -87,7 +85,7 @@ const OtpVerification = () => {
                       }
                     }}
                     maxLength={1}
-                    className="bg-blue-50 w-full max-w-16 p-2 border rounded outline-none focus:border-primary-200 text-center font-semibold"
+                    className="bg-blue-50 w-full max-w-16 p-2 border rounded outline-none focus:border-sky-500 text-center font-semibold"
                   />
                 );
               })}
@@ -97,7 +95,7 @@ const OtpVerification = () => {
           <button
             disabled={!valideValue}
             className={` ${
-              valideValue ? "bg-green-800 hover:bg-green-700" : "bg-gray-500"
+              valideValue ? "bg-sky-500 hover:bg-sky-400" : "bg-gray-500"
             }    text-white py-2 rounded font-semibold my-3 tracking-wide`}
           >
             Verify OTP
@@ -108,7 +106,7 @@ const OtpVerification = () => {
           Already have account?{" "}
           <Link
             to={"/login"}
-            className="font-semibold text-green-700 hover:text-green-800"
+            className="font-semibold text-sky-400 hover:text-sky-500"
           >
             Login
           </Link>
