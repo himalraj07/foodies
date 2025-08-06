@@ -1,16 +1,21 @@
 import { useState } from "react";
-import logo from "../assets/logo.png";
 import { BsCart4 } from "react-icons/bs";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
 import useMobile from "../hooks/useMobile";
 import Search from "./Search";
+import { useSelector } from "react-redux";
+import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 
 const Header = () => {
   const [isMobile] = useMobile();
   const location = useLocation();
   const isSearchPage = location.pathname === "/search";
   const navigate = useNavigate();
+  const user = useSelector((state) => state?.user);
+
+  console.log("user from store", user);
 
   const redirectToLoginPage = () => {
     navigate("/login");
@@ -57,9 +62,19 @@ const Header = () => {
 
             {/**Desktop**/}
             <div className="hidden lg:flex  items-center gap-10">
-              <button onClick={redirectToLoginPage} className="text-lg px-2">
-                Login
-              </button>
+              {user?._id ? (
+                <div>
+                  <div className="flex items-center gap-2 ">
+                    <p>Account</p>
+                    <GoTriangleDown />
+                    {/* <GoTriangleUp /> */}
+                  </div>
+                </div>
+              ) : (
+                <button onClick={redirectToLoginPage} className="text-lg px-2">
+                  Login
+                </button>
+              )}
               <button
                 onClick={() => setOpenCartSection(true)}
                 className="flex items-center gap-2 bg-green-800 hover:bg-green-700 px-3 py-2 rounded text-white"

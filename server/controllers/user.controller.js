@@ -370,10 +370,10 @@ export async function verifyForgotPasswordOtp(request, response) {
     // if otp is not expired
     // otp === user.forgot_password_otp
 
-    // const updateUser = await UserModel.findByIdAndUpdate(user?._id, {
-    //   forgot_password_otp: "",
-    //   forgot_password_expiry: "",
-    // });
+    const updateUser = await UserModel.findByIdAndUpdate(user?._id, {
+      forgot_password_otp: "",
+      forgot_password_expiry: "",
+    });
 
     return response.json({
       message: "Verify otp successfully",
@@ -496,26 +496,28 @@ export async function refreshToken(request, response) {
   }
 }
 
-//get login user details
-// export async function userDetails(request,response){
-//     try {
-//         const userId  = request.userId
+// Get Login User Details
+export async function userDetails(request, response) {
+  try {
+    const userId = request.userId;
 
-//         console.log(userId)
+    console.log(userId);
 
-//         const user = await UserModel.findById(userId).select('-password -refresh_token')
+    const user = await UserModel.findById(userId).select(
+      "-password -refresh_token"
+    );
 
-//         return response.json({
-//             message : 'user details',
-//             data : user,
-//             error : false,
-//             success : true
-//         })
-//     } catch (error) {
-//         return response.status(500).json({
-//             message : "Something is wrong",
-//             error : true,
-//             success : false
-//         })
-//     }
-// }
+    return response.json({
+      message: "user details",
+      data: user,
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: "Something is wrong",
+      error: true,
+      success: false,
+    });
+  }
+}
