@@ -22,14 +22,14 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="min-h-[78vh]">
+      <main className="flex-1">
         <Outlet />
       </main>
-      <Footer />
+      <Footer className="py-1 text-xs" />
       <Toaster />
-    </>
+    </div>
   );
 }
 
