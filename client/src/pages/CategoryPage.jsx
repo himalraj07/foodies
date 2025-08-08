@@ -74,8 +74,8 @@ const CategoryPage = () => {
               <div className="items-center h-9 flex gap-2">
                 <button
                   onClick={() => {
-                    setOpenEdit(true);
-                    setEditData(category);
+                    // setOpenEdit(true);
+                    // setEditData(category);
                   }}
                   className="flex-1 bg-green-100 hover:bg-green-200 text-green-600 font-medium py-0.5 rounded cursor-pointer"
                 >
@@ -83,8 +83,8 @@ const CategoryPage = () => {
                 </button>
                 <button
                   onClick={() => {
-                    setOpenConfirmBoxDelete(true);
-                    setDeleteCategory(category);
+                    // setOpenConfirmBoxDelete(true);
+                    // setDeleteCategory(category);
                   }}
                   className="flex-1 bg-red-100 hover:bg-red-200 text-red-600 font-medium py-0.5 rounded cursor-pointer px-1"
                 >
