@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
+import { FaCloudUploadAlt } from "react-icons/fa";
 import uploadImage from "../utils/UploadImage";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
@@ -15,18 +16,14 @@ const UploadCategoryModel = ({ close, fetchData }) => {
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-
-    setData((preve) => {
-      return {
-        ...preve,
-        [name]: value,
-      };
-    });
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       setLoading(true);
       const response = await Axios({
@@ -34,7 +31,6 @@ const UploadCategoryModel = ({ close, fetchData }) => {
         data: data,
       });
       const { data: responseData } = response;
-
       if (responseData.success) {
         toast.success(responseData.message);
         close();
@@ -49,75 +45,83 @@ const UploadCategoryModel = ({ close, fetchData }) => {
 
   const handleUploadCategoryImage = async (e) => {
     const file = e.target.files[0];
-
-    if (!file) {
-      return;
-    }
-
+    if (!file) return;
     const response = await uploadImage(file);
     const { data: ImageResponse } = response;
-
-    setData((preve) => {
-      return {
-        ...preve,
-        image: ImageResponse.data.url,
-      };
-    });
+    setData((prev) => ({
+      ...prev,
+      image: ImageResponse.data.url,
+    }));
   };
 
   return (
-    <section className="fixed top-0 bottom-0 left-0  right-0 p-4 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white max-w-4xl w-full p-4 rounded-lg shadow-lg">
-        <div className="flex items-center justify-between">
-          <h1 className="font-semibold">Add New Category</h1>
-          <button
-            onClick={close}
-            className="w-fit block ml-auto cursor-pointer"
-          >
-            <IoIosCloseCircle
-              size={25}
-              className="text-gray-500 hover:text-red-500"
-            />
-          </button>
-        </div>
-
-        <form className="grid gap-4 mt-4 " onSubmit={handleSubmit}>
-          <div className="grid gap-4 mt-4">
-            <label id="categoryName">Name</label>
+    <section className="fixed inset-0 bg-gradient-to-br from-blue-100 via-white to-orange-100 flex items-center justify-center z-50">
+      <div className="bg-white max-w-lg w-full p-8 rounded-3xl shadow-2xl border border-orange-200 relative animate-fadeIn">
+        <button
+          onClick={close}
+          className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors"
+          aria-label="Close"
+        >
+          <IoIosCloseCircle size={32} />
+        </button>
+        <h1 className="text-2xl font-bold text-orange-500 mb-2 text-center tracking-wide">
+          Add New Category
+        </h1>
+        <p className="text-gray-500 text-center mb-6">
+          Create a new food category for your menu. Please provide a name and
+          image.
+        </p>
+        <form className="grid gap-6" onSubmit={handleSubmit}>
+          <div>
+            <label
+              htmlFor="categoryName"
+              className="block text-sm font-semibold text-gray-700 mb-2"
+            >
+              Category Name
+            </label>
             <input
               type="text"
               id="categoryName"
-              placeholder="Enter category name"
+              placeholder="e.g. Pizza, Burger, Drinks"
               value={data.name}
               name="name"
               onChange={handleOnChange}
-              className="p-2 border border-neutral-400 rounded outline-none focus:border-sky-500 bg-blue-50 "
+              className="w-full p-3 border border-orange-200 rounded-xl outline-none focus:border-orange-400 bg-orange-50 transition"
+              autoFocus
+              maxLength={32}
+              required
             />
           </div>
-          <div className="grid gap-1">
-            <p>Image</p>
-            <div className="flex items-center gap-4 flex-col lg:flex-row">
-              <div className="border border-dashed bg-blue-50 h-52 w-full lg:w-52 rounded flex items-center justify-center">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Category Image
+            </label>
+            <div className="flex flex-col lg:flex-row gap-4 items-center">
+              <div className="border-2 border-dashed border-orange-300 bg-orange-50 h-52 w-full lg:w-52 rounded-xl flex items-center justify-center overflow-hidden relative">
                 {data.image ? (
                   <img
                     src={data.image}
                     alt="Uploaded"
-                    className="h-full w-full object-scale-down"
+                    className="h-full w-full object-cover rounded-xl shadow"
                   />
                 ) : (
-                  <p className="text-sm text-neutral-500">No Image</p>
+                  <div className="flex flex-col items-center justify-center text-orange-300">
+                    <FaCloudUploadAlt size={40} />
+                    <span className="text-sm mt-2">No Image Uploaded</span>
+                  </div>
                 )}
               </div>
-              <label htmlFor="uploadCategoryImage">
+              <label htmlFor="uploadCategoryImage" className="w-full lg:w-auto">
                 <div
-                  className={`
-                ${
-                  !data.name
-                    ? " bg-gray-300 cursor-not-allowed"
-                    : " border-blue-500 hover:bg-blue-500 hover:text-white"
-                } cursor-pointer border border-neutral-400 px-4 py-2 rounded
-                `}
+                  className={`flex items-center gap-2 justify-center px-6 py-3 rounded-xl font-semibold transition
+                    ${
+                      !data.name
+                        ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                        : "bg-orange-500 text-white hover:bg-orange-600 cursor-pointer shadow"
+                    }
+                  `}
                 >
+                  <FaCloudUploadAlt size={20} />
                   Upload Image
                 </div>
                 <input
@@ -132,21 +136,33 @@ const UploadCategoryModel = ({ close, fetchData }) => {
               </label>
             </div>
           </div>
-
           <button
-            className={`
+            disabled={!(data.name && data.image) || loading}
+            className={`w-full py-3 font-bold rounded-2xl transition cursor-pointer
               ${
-                data.name && data.image
-                  ? "bg-orange-200 hover:bg-orange-300"
-                  : "bg-gray-300"
+                data.name && data.image && !loading
+                  ? "bg-gradient-to-r from-orange-400 to-orange-500 text-white hover:from-orange-500 hover:to-orange-600 shadow-lg"
+                  : "bg-gray-200 text-gray-400 cursor-not-allowed"
               }
-              py-2 font-semibold rounded-2xl cursor-pointer
             `}
           >
-            Add Category
+            {loading ? (
+              <span className="animate-pulse">Adding...</span>
+            ) : (
+              "Add Category"
+            )}
           </button>
         </form>
       </div>
+      <style>{`
+        .animate-fadeIn {
+          animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: scale(0.95);}
+          to { opacity: 1; transform: scale(1);}
+        }
+      `}</style>
     </section>
   );
 };

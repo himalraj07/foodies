@@ -91,43 +91,43 @@ export const updateCategoryController = async (request, response) => {
   }
 };
 
-// export const deleteCategoryController = async (request, response) => {
-//   try {
-//     const { _id } = request.body;
+export const deleteCategoryController = async (request, response) => {
+  try {
+    const { _id } = request.body;
 
-//     const checkSubCategory = await SubCategoryModel.find({
-//       category: {
-//         $in: [_id],
-//       },
-//     }).countDocuments();
+    const checkSubCategory = await SubCategoryModel.find({
+      category: {
+        $in: [_id],
+      },
+    }).countDocuments();
 
-//     const checkProduct = await ProductModel.find({
-//       category: {
-//         $in: [_id],
-//       },
-//     }).countDocuments();
+    const checkProduct = await ProductModel.find({
+      category: {
+        $in: [_id],
+      },
+    }).countDocuments();
 
-//     if (checkSubCategory > 0 || checkProduct > 0) {
-//       return response.status(400).json({
-//         message: "Category is already use can't delete",
-//         error: true,
-//         success: false,
-//       });
-//     }
+    if (checkSubCategory > 0 || checkProduct > 0) {
+      return response.status(400).json({
+        message: "Category is already in use and can't be deleted!",
+        error: true,
+        success: false,
+      });
+    }
 
-//     const deleteCategory = await CategoryModel.deleteOne({ _id: _id });
+    const deleteCategory = await CategoryModel.deleteOne({ _id: _id });
 
-//     return response.json({
-//       message: "Delete category successfully",
-//       data: deleteCategory,
-//       error: false,
-//       success: true,
-//     });
-//   } catch (error) {
-//     return response.status(500).json({
-//       message: error.message || error,
-//       success: false,
-//       error: true,
-//     });
-//   }
-// };
+    return response.json({
+      message: "Category deleted successfully",
+      data: deleteCategory,
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      success: false,
+      error: true,
+    });
+  }
+};
