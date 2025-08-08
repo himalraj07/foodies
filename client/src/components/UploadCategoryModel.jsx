@@ -74,7 +74,10 @@ const UploadCategoryModel = ({ close, fetchData }) => {
             onClick={close}
             className="w-fit block ml-auto cursor-pointer"
           >
-            <IoIosCloseCircle size={25} />
+            <IoIosCloseCircle
+              size={25}
+              className="text-gray-500 hover:text-red-500"
+            />
           </button>
         </div>
 

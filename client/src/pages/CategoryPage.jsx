@@ -4,21 +4,21 @@ import Loading from "../components/Loading";
 import NoData from "../components/NoData";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
-// import EditCategory from "../components/EditCategory";
+import EditCategory from "../components/EditCategory";
 // import CofirmBox from "../components/CofirmBox";
-// import toast from "react-hot-toast";
-// import AxiosToastError from "../utils/AxiosToastError";
-// import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import AxiosToastError from "../utils/AxiosToastError";
+import { useSelector } from "react-redux";
 
 const CategoryPage = () => {
   const [openUploadCategory, setOpenUploadCategory] = useState(false);
   const [loading, setLoading] = useState(false);
   const [categoryData, setCategoryData] = useState([]);
-  //  const [openEdit, setOpenEdit] = useState(false);
-  //  const [editData, setEditData] = useState({
-  //    name: "",
-  //    image: "",
-  //  });
+   const [openEdit, setOpenEdit] = useState(false);
+   const [editData, setEditData] = useState({
+     name: "",
+     image: "",
+   });
   //  const [openConfimBoxDelete, setOpenConfirmBoxDelete] = useState(false);
   //  const [deleteCategory, setDeleteCategory] = useState({
   //    _id: "",
@@ -44,6 +44,7 @@ const CategoryPage = () => {
   useEffect(() => {
     fetchCategory();
   }, []);
+
 
   return (
     <section>
@@ -74,8 +75,8 @@ const CategoryPage = () => {
               <div className="items-center h-9 flex gap-2">
                 <button
                   onClick={() => {
-                    // setOpenEdit(true);
-                    // setEditData(category);
+                    setOpenEdit(true);
+                    setEditData(category);
                   }}
                   className="flex-1 bg-green-100 hover:bg-green-200 text-green-600 font-medium py-0.5 rounded cursor-pointer"
                 >
@@ -102,6 +103,14 @@ const CategoryPage = () => {
         <UploadCategoryModel
           fetchData={fetchCategory}
           close={() => setOpenUploadCategory(false)}
+        />
+      )}
+
+      {openEdit && (
+        <EditCategory
+          data={editData}
+          close={() => setOpenEdit(false)}
+          fetchData={fetchCategory}
         />
       )}
     </section>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IoClose } from "react-icons/io5";
+import { IoIosCloseCircle } from "react-icons/io";
 import uploadImage from "../utils/UploadImage";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
@@ -12,6 +12,7 @@ const EditCategory = ({ close, fetchData, data: CategoryData }) => {
     name: CategoryData.name,
     image: CategoryData.image,
   });
+
   const [loading, setLoading] = useState(false);
 
   const handleOnChange = (e) => {
@@ -24,6 +25,7 @@ const EditCategory = ({ close, fetchData, data: CategoryData }) => {
       };
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -46,6 +48,7 @@ const EditCategory = ({ close, fetchData, data: CategoryData }) => {
       setLoading(false);
     }
   };
+
   const handleUploadCategoryImage = async (e) => {
     const file = e.target.files[0];
 
@@ -64,17 +67,25 @@ const EditCategory = ({ close, fetchData, data: CategoryData }) => {
       };
     });
   };
+
   return (
-    <section className="fixed top-0 bottom-0 left-0 right-0 p-4 bg-black/50 flex items-center justify-center">
-      <div className="bg-white max-w-4xl w-full p-4 rounded">
+    <section className="fixed top-0 bottom-0 left-0  right-0 p-4 bg-black/50 flex items-center justify-center z-50">
+      <div className="bg-white max-w-4xl w-full p-4 rounded-lg shadow-lg">
         <div className="flex items-center justify-between">
           <h1 className="font-semibold">Update Category</h1>
-          <button onClick={close} className="w-fit block ml-auto">
-            <IoClose size={25} />
+          <button
+            onClick={close}
+            className="w-fit block ml-auto cursor-pointer"
+          >
+            <IoIosCloseCircle
+              size={25}
+              className="text-gray-500 hover:text-red-500"
+            />
           </button>
         </div>
-        <form className="my-3 grid gap-2" onSubmit={handleSubmit}>
-          <div className="grid gap-1">
+
+        <form className="grid gap-4 mt-4 " onSubmit={handleSubmit}>
+          <div className="grid gap-4 mt-4">
             <label id="categoryName">Name</label>
             <input
               type="text"
@@ -83,18 +94,18 @@ const EditCategory = ({ close, fetchData, data: CategoryData }) => {
               value={data.name}
               name="name"
               onChange={handleOnChange}
-              className="bg-blue-50 p-2 border border-blue-100 focus-within:border-primary-200 outline-none rounded"
+              className="p-2 border border-neutral-400 rounded outline-none focus:border-sky-500 bg-blue-50 "
             />
           </div>
           <div className="grid gap-1">
             <p>Image</p>
-            <div className="flex gap-4 flex-col lg:flex-row items-center">
-              <div className="border bg-blue-50 h-36 w-full lg:w-36 flex items-center justify-center rounded">
+            <div className="flex items-center gap-4 flex-col lg:flex-row">
+              <div className="border border-dashed bg-blue-50 h-52 w-full lg:w-52 rounded flex items-center justify-center">
                 {data.image ? (
                   <img
-                    alt="category"
                     src={data.image}
-                    className="w-full h-full object-scale-down"
+                    alt="Uploaded"
+                    className="h-full w-full object-scale-down"
                   />
                 ) : (
                   <p className="text-sm text-neutral-500">No Image</p>
@@ -103,23 +114,23 @@ const EditCategory = ({ close, fetchData, data: CategoryData }) => {
               <label htmlFor="uploadCategoryImage">
                 <div
                   className={`
-                        ${
-                          !data.name
-                            ? "bg-gray-300"
-                            : "border-primary-200 hover:bg-primary-100"
-                        }  
-                            px-4 py-2 rounded cursor-pointer border font-medium
-                        `}
+                   ${
+                     !data.name
+                       ? " bg-gray-300 cursor-not-allowed"
+                       : " border-blue-500 hover:bg-blue-500 hover:text-white"
+                   } cursor-pointer border border-neutral-400 px-4 py-2 rounded
+                   `}
                 >
-                  {loading ? "Loading..." : "Upload Image"}
+                  {loading ? "Uploading..." : "Upload Image"}
                 </div>
-
                 <input
-                  disabled={!data.name}
-                  onChange={handleUploadCategoryImage}
                   type="file"
                   id="uploadCategoryImage"
+                  accept="image/*"
                   className="hidden"
+                  name="image"
+                  disabled={!data.name}
+                  onChange={handleUploadCategoryImage}
                 />
               </label>
             </div>
@@ -127,14 +138,13 @@ const EditCategory = ({ close, fetchData, data: CategoryData }) => {
 
           <button
             className={`
-                ${
-                  data.name && data.image
-                    ? "bg-primary-200 hover:bg-primary-100"
-                    : "bg-gray-300 "
-                }
-                py-2    
-                font-semibold 
-                `}
+                 ${
+                   data.name && data.image
+                     ? "bg-orange-200 hover:bg-orange-300"
+                     : "bg-gray-300"
+                 }
+                 py-2 font-semibold rounded-2xl cursor-pointer
+               `}
           >
             Update Category
           </button>
