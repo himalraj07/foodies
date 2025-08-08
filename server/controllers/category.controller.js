@@ -62,34 +62,34 @@ export const getCategoryController = async (request, response) => {
   }
 };
 
-// export const updateCategoryController = async (request, response) => {
-//   try {
-//     const { _id, name, image } = request.body;
+export const updateCategoryController = async (request, response) => {
+  try {
+    const { _id, name, image } = request.body;
 
-//     const update = await CategoryModel.updateOne(
-//       {
-//         _id: _id,
-//       },
-//       {
-//         name,
-//         image,
-//       }
-//     );
+    const update = await CategoryModel.updateOne(
+      {
+        _id: _id,
+      },
+      {
+        name,
+        image,
+      }
+    );
 
-//     return response.json({
-//       message: "Updated Category",
-//       success: true,
-//       error: false,
-//       data: update,
-//     });
-//   } catch (error) {
-//     return response.status(500).json({
-//       message: error.message || error,
-//       error: true,
-//       success: false,
-//     });
-//   }
-// };
+    return response.json({
+      message: "Updated Category",
+      success: true,
+      error: false,
+      data: update,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+};
 
 // export const deleteCategoryController = async (request, response) => {
 //   try {
