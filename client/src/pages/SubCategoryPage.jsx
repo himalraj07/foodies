@@ -16,7 +16,7 @@ const SubCategoryPage = () => {
       </div>
 
       {openAddSubCategory && (
-        <UploadSubCategoryModel onClose={() => setOpenAddSubCategory(false)} />
+        <UploadSubCategoryModel close={() => setOpenAddSubCategory(false)} />
       )}
     </section>
   );
