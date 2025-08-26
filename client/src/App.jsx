@@ -28,9 +28,7 @@ function App() {
       const { data: responseData } = response;
 
       if (responseData.success) {
-        console.log("responseData.data", responseData.data)
         dispatch(setAllCategory(responseData.data));
-        // setCategoryData(responseData.data);
       }
     } catch (error) {
     } finally {

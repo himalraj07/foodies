@@ -14,7 +14,8 @@ const UploadSubCategoryModel = ({ close }) => {
     image: "",
     category: [],
   });
-  // const allCategory = useSelector((state) => state.product.allCategory);
+  const allCategory = useSelector((state) => state.product.allCategory);
+  console.log("allCategory sub category page", allCategory);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,6 +45,20 @@ const UploadSubCategoryModel = ({ close }) => {
       };
     });
   };
+
+ const handleRemoveCategorySelected = (categoryId) => {
+   const index = subCategoryData.category.findIndex(
+     (el) => el._id === categoryId
+   );
+   subCategoryData.category.splice(index, 1);
+   setSubCategoryData((preve) => {
+     return {
+       ...preve,
+     };
+   });
+ };
+
+  console.log("Sub Category Data:", subCategoryData);
 
   return (
     <section className="fixed top-0 right-0 bottom-0 left-0 bg-neutral-800/70 z-50 flex items-center justify-center p-4">
@@ -103,12 +118,58 @@ const UploadSubCategoryModel = ({ close }) => {
             <label>Select Category</label>
             <div className="border focus-within:border-[#EA6A1C] rounded p-3">
               {/* Display Value */}
+              <div className="flex flex-wrap gap-2">
+                {subCategoryData.category.map((cat, index) => {
+                  return (
+                    <p
+                      key={cat._id + "selectedValue"}
+                      className="bg-white shadow-md px-1 m-1 flex items-center gap-2"
+                    >
+                      {cat.name}
+                      <div
+                        className="cursor-pointer"
+                        onClick={() => handleRemoveCategorySelected(cat._id)}
+                      >
+                        <IoIosCloseCircle
+                          size={20}
+                          className="text-red-400 hover:text-red-600 cursor-pointer"
+                        />
+                      </div>
+                    </p>
+                  );
+                })}
+              </div>
 
               {/* Select category */}
-              <select className="w-full p-2 bg-transparent outline-none">
+              <select
+                className="w-full p-2 bg-transparent outline-none border"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const categoryDetails = allCategory.find(
+                    (el) => el._id == value
+                  );
+
+                  setSubCategoryData((preve) => {
+                    return {
+                      ...preve,
+                      category: [...preve.category, categoryDetails],
+                    };
+                  });
+                }}
+              >
                 <option value={""} disabled>
                   Select Category
                 </option>
+                {allCategory.map((category, index) => {
+                  return (
+                    <option
+                      value={category?._id}
+                      key={category._id + "subcategory"}
+                    >
+                      {category?.name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>

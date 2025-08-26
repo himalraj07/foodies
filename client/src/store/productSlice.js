@@ -12,7 +12,6 @@ const productSlice = createSlice({
   initialState: initialValue,
   reducers: {
     setAllCategory: (state, action) => {
-      console.log("all category redux store", action.payload);
       state.allCategory = [...action.payload];
     },
     // setLoadingCategory: (state, action) => {

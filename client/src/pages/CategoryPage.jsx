@@ -24,7 +24,10 @@ const CategoryPage = () => {
     _id: "",
   });
   const allCategory = useSelector((state) => state.product.allCategory);
-  console.log("all category redux", allCategory);
+
+  useEffect(() => {
+    setCategoryData(allCategory);
+  }, [allCategory]);
 
   // const fetchCategory = async () => {
   //   try {
