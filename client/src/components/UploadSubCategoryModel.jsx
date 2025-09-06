@@ -15,7 +15,6 @@ const UploadSubCategoryModel = ({ close }) => {
     category: [],
   });
   const allCategory = useSelector((state) => state.product.allCategory);
-  console.log("allCategory sub category page", allCategory);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,19 +45,43 @@ const UploadSubCategoryModel = ({ close }) => {
     });
   };
 
- const handleRemoveCategorySelected = (categoryId) => {
-   const index = subCategoryData.category.findIndex(
-     (el) => el._id === categoryId
-   );
-   subCategoryData.category.splice(index, 1);
-   setSubCategoryData((preve) => {
-     return {
-       ...preve,
-     };
-   });
- };
+  const handleRemoveCategorySelected = (categoryId) => {
+    const index = subCategoryData.category.findIndex(
+      (el) => el._id === categoryId
+    );
+    subCategoryData.category.splice(index, 1);
+    setSubCategoryData((preve) => {
+      return {
+        ...preve,
+      };
+    });
+  };
 
-  console.log("Sub Category Data:", subCategoryData);
+  const handleSubmitSubCategory = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await Axios({
+        ...SummaryApi.createSubCategory,
+        data: subCategoryData,
+      });
+
+      const { data: responseData } = response;
+
+      console.log("responseData", responseData);
+      if (responseData.success) {
+        toast.success(responseData.message);
+        if (close) {
+          close();
+        }
+        // if (fetchData) {
+        //   fetchData();
+        // }
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    }
+  };
 
   return (
     <section className="fixed top-0 right-0 bottom-0 left-0 bg-neutral-800/70 z-50 flex items-center justify-center p-4">
@@ -73,7 +96,7 @@ const UploadSubCategoryModel = ({ close }) => {
           </button>
         </div>
 
-        <form className="my-3 grid gap-3">
+        <form className="my-3 grid gap-3" onSubmit={handleSubmitSubCategory}>
           <div className="grid gap-1">
             <label htmlFor="name">Name</label>
             <input
@@ -157,9 +180,7 @@ const UploadSubCategoryModel = ({ close }) => {
                   });
                 }}
               >
-                <option value={""} disabled>
-                  Select Category
-                </option>
+                <option value={""}>Select Category</option>
                 {allCategory.map((category, index) => {
                   return (
                     <option
@@ -173,6 +194,20 @@ const UploadSubCategoryModel = ({ close }) => {
               </select>
             </div>
           </div>
+
+          <button
+            className={`px-4 py-2 border rounded font-semibold cursor-pointer
+            ${
+              subCategoryData?.name &&
+              subCategoryData?.image &&
+              subCategoryData?.category[0]
+                ? "bg-[#EA6A1C] hover:bg-amber-600"
+                : "bg-gray-200"
+            }
+            `}
+          >
+            Submit
+          </button>
         </form>
       </div>
     </section>
