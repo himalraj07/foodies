@@ -3,8 +3,8 @@ import UploadSubCategoryModel from "../components/UploadSubCategoryModel";
 import AxiosToastError from "../utils/AxiosToastError";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
-// import DisplayTable from "../components/DisplayTable";
-// import { createColumnHelper } from "@tanstack/react-table";
+import DisplayTable from "../components/DisplayTable";
+import { createColumnHelper } from "@tanstack/react-table";
 // import ViewImage from "../components/ViewImage";
 // import { LuPencil } from "react-icons/lu";
 // import { MdDelete } from "react-icons/md";
@@ -17,6 +17,7 @@ const SubCategoryPage = () => {
   const [openAddSubCategory, setOpenAddSubCategory] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+    const columnHelper = createColumnHelper();
 
   const fetchSubCategory = async () => {
     try {
@@ -40,6 +41,31 @@ const SubCategoryPage = () => {
     fetchSubCategory();
   }, []);
 
+  const column = [
+    columnHelper.accessor("name", {
+      header: "Name",
+    }),
+    columnHelper.accessor("image", {
+      header: "Image",
+      cell: ({row})=>{
+        console.log("row", row.original.image);
+        return (
+          <div className="flex items-center justify-center">
+            <img
+              src={row.original.image}
+              alt={row.original.name}
+              className="w-8 h-8"
+            />
+          </div>
+        );
+      }
+    }),
+
+    columnHelper.accessor("category", {
+      header: "Category",
+    })
+  ];
+
   console.log("subcategory", data);
 
   return (
@@ -52,6 +78,13 @@ const SubCategoryPage = () => {
         >
           Add Sub Category
         </button>
+      </div>
+
+      <div>
+        <DisplayTable 
+        data={data}
+        column={column}
+        />
       </div>
 
       {openAddSubCategory && (
