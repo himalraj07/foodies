@@ -9,8 +9,8 @@ import ViewImage from "../components/ViewImage";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import EditSubCategory from "../components/EditSubCategory";
-// import CofirmBox from "../components/CofirmBox";
-// import toast from "react-hot-toast";
+import ConfirmBox from "../components/ConfirmBox";
+import toast from "react-hot-toast";
 
 const SubCategoryPage = () => {
   const [openAddSubCategory, setOpenAddSubCategory] = useState(false);
@@ -22,6 +22,10 @@ const SubCategoryPage = () => {
   const [editData, setEditData] = useState({
     _id: "",
   });
+  const [deleteSubCategory, setDeleteSubCategory] = useState({
+    _id: "",
+  });
+  const [openDeleteConfirmBox, setOpenDeleteConfirmBox] = useState(false);
 
   const fetchSubCategory = async () => {
     try {
@@ -102,7 +106,12 @@ const SubCategoryPage = () => {
                 className="hover:text-blue-500 cursor-pointer text-blue-400"
               />
             </button>
-            <button>
+            <button
+              onClick={() => {
+                setDeleteSubCategory(row.original);
+                setOpenDeleteConfirmBox(true);
+              }}
+            >
               <MdDelete
                 size={20}
                 className="hover:text-red-500 cursor-pointer text-red-400"
@@ -114,7 +123,25 @@ const SubCategoryPage = () => {
     }),
   ];
 
-  console.log("subcategory", data);
+  const handleDeleteSubCategory = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.deleteSubCategory,
+        data: deleteSubCategory,
+      });
+
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+        toast.success(responseData.message);
+        fetchSubCategory();
+        setOpenDeleteConfirmBox(false);
+        setDeleteSubCategory({ _id: "" });
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    }
+  };
 
   return (
     <section>
@@ -128,7 +155,7 @@ const SubCategoryPage = () => {
         </button>
       </div>
 
-      <div>
+      <div className="overflow-auto w-full max-w-[95vw]">
         <DisplayTable data={data} column={column} />
       </div>
 
@@ -143,6 +170,15 @@ const SubCategoryPage = () => {
           data={editData}
           close={() => setOpenEdit(false)}
           fetchData={fetchSubCategory}
+        />
+      )}
+
+      {openDeleteConfirmBox && (
+        <ConfirmBox
+          cancel={() => setOpenDeleteConfirmBox(false)}
+          close={() => setOpenDeleteConfirmBox(false)}
+          confirm={handleDeleteSubCategory}
+          title={`Are you sure you want to delete ${deleteSubCategory.name} subcategory?`}
         />
       )}
     </section>
