@@ -8,8 +8,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import ViewImage from "../components/ViewImage";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-// import { HiPencil } from "react-icons/hi";
-// import EditSubCategory from "../components/EditSubCategory";
+import EditSubCategory from "../components/EditSubCategory";
 // import CofirmBox from "../components/CofirmBox";
 // import toast from "react-hot-toast";
 
@@ -19,6 +18,10 @@ const SubCategoryPage = () => {
   const [loading, setLoading] = useState(false);
   const columnHelper = createColumnHelper();
   const [ImageURL, setImageURL] = useState("");
+  const [openEdit, setOpenEdit] = useState(false);
+  const [editData, setEditData] = useState({
+    _id: "",
+  });
 
   const fetchSubCategory = async () => {
     try {
@@ -88,7 +91,12 @@ const SubCategoryPage = () => {
       cell: ({ row }) => {
         return (
           <div className="flex items-center justify-center gap-3">
-            <button>
+            <button
+              onClick={() => {
+                setEditData(row.original);
+                setOpenEdit(true);
+              }}
+            >
               <FaEdit
                 size={20}
                 className="hover:text-blue-500 cursor-pointer text-blue-400"
@@ -129,6 +137,14 @@ const SubCategoryPage = () => {
       )}
 
       {ImageURL && <ViewImage url={ImageURL} close={() => setImageURL("")} />}
+
+      {openEdit && (
+        <EditSubCategory
+          data={editData}
+          close={() => setOpenEdit(false)}
+          fetchData={fetchSubCategory}
+        />
+      )}
     </section>
   );
 };
