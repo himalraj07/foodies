@@ -5,9 +5,9 @@ import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
 import DisplayTable from "../components/DisplayTable";
 import { createColumnHelper } from "@tanstack/react-table";
-// import ViewImage from "../components/ViewImage";
-// import { LuPencil } from "react-icons/lu";
-// import { MdDelete } from "react-icons/md";
+import ViewImage from "../components/ViewImage";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 // import { HiPencil } from "react-icons/hi";
 // import EditSubCategory from "../components/EditSubCategory";
 // import CofirmBox from "../components/CofirmBox";
@@ -17,7 +17,8 @@ const SubCategoryPage = () => {
   const [openAddSubCategory, setOpenAddSubCategory] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-    const columnHelper = createColumnHelper();
+  const columnHelper = createColumnHelper();
+  const [ImageURL, setImageURL] = useState("");
 
   const fetchSubCategory = async () => {
     try {
@@ -47,23 +48,62 @@ const SubCategoryPage = () => {
     }),
     columnHelper.accessor("image", {
       header: "Image",
-      cell: ({row})=>{
+      cell: ({ row }) => {
         console.log("row", row.original.image);
         return (
           <div className="flex items-center justify-center">
             <img
               src={row.original.image}
               alt={row.original.name}
-              className="w-8 h-8"
+              className="w-8 h-8 cursor-pointer"
+              onClick={() => setImageURL(row.original.image)}
             />
           </div>
         );
-      }
+      },
     }),
 
     columnHelper.accessor("category", {
       header: "Category",
-    })
+      cell: ({ row }) => {
+        return (
+          <>
+            {row.original.category.map((c, index) => {
+              return (
+                <p
+                  key={c._id + "table"}
+                  className="shadow-md px-1 inline-block rounded-2xl mr-1 mb-1 border text-sm"
+                >
+                  {c.name}
+                </p>
+              );
+            })}
+          </>
+        );
+      },
+    }),
+
+    columnHelper.accessor("_id", {
+      header: "Action",
+      cell: ({ row }) => {
+        return (
+          <div className="flex items-center justify-center gap-3">
+            <button>
+              <FaEdit
+                size={20}
+                className="hover:text-blue-500 cursor-pointer text-blue-400"
+              />
+            </button>
+            <button>
+              <MdDelete
+                size={20}
+                className="hover:text-red-500 cursor-pointer text-red-400"
+              />
+            </button>
+          </div>
+        );
+      },
+    }),
   ];
 
   console.log("subcategory", data);
@@ -81,15 +121,14 @@ const SubCategoryPage = () => {
       </div>
 
       <div>
-        <DisplayTable 
-        data={data}
-        column={column}
-        />
+        <DisplayTable data={data} column={column} />
       </div>
 
       {openAddSubCategory && (
         <UploadSubCategoryModel close={() => setOpenAddSubCategory(false)} />
       )}
+
+      {ImageURL && <ViewImage url={ImageURL} close={() => setImageURL("")} />}
     </section>
   );
 };
