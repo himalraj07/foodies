@@ -139,10 +139,6 @@ const UploadProduct = () => {
     }
   };
 
-  // useEffect(()=>{
-  //   successAlert("Upload successfully")
-  // },[])
-
   return (
     <section className="">
       <div className="p-2  bg-white shadow-md rounded-lg mb-4 flex items-center justify-between">
